@@ -58,6 +58,8 @@ HTTP/1.1 <%=
     '201 Created'
   when 'empty'
     '202 Accepted'
+  when 'destroy'
+    '204 No Content'
   else
     '200 OK'
   end %>
@@ -73,6 +75,7 @@ HTTP/1.1 <%=
 <%=     JSON.pretty_generate(schema.schema_example(link['targetSchema'])) %>
 <%-   elsif link['rel'] == 'instances' %>
 <%=     JSON.pretty_generate([schema.schemata_example(resource)]) %>
+<%-   elsif link['rel'] == 'destroy' %>
 <%-   else %>
 <%=     JSON.pretty_generate(schema.schemata_example(resource)) %>
 <%-   end %>
