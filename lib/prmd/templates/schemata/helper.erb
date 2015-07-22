@@ -78,7 +78,25 @@
     end
 
     if value['enum']
-      description += '<br/> **one of:**' + [*value['enum']].map { |e| "`#{e.to_json}`" }.join(" or ")
+      description += '<br/> **one of:**' + [*value['enum']].map { |e|
+        enum_value = e.to_json
+        text = "`#{enum_value}`"
+
+        label = ''
+        if value['options']
+          [*value['options']].map { |o|
+            if o['value'].to_json == enum_value
+              label = o['label']
+            end
+          }
+        end
+
+        if label != ''
+         text += ":#{label}"
+        end
+
+        "#{text}"
+      }.join(" or ")
     end
 
     if value['pattern']
